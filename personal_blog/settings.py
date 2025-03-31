@@ -15,42 +15,41 @@ import dj_database_url
 from dotenv import load_dotenv
 from pathlib import Path
 
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Support env variables from .env file if defined
-env_path = load_dotenv(os.path.join(BASE_DIR, ".env"))
-load_dotenv(env_path)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY", "django-insecure-y595567z_6p&@c$&gd1=ggbzhbqg9&zi6uif7-w_#o#vwuno^m"
-)
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "True") == "True"
+DEBUG = os.getenv("DEBUG") == "True"
 
-DB_PREFIX = "retweeter_"
-
-ALLOWED_HOSTS = [os.environ.get("HOSTNAME", "")]
+ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS.append(os.getenv("ALLOWED_HOSTS"))
 
 
 # Application definition
 
 INSTALLED_APPS = [
     "django_db_prefix",
-    "blog.apps.BlogConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "blog.apps.BlogConfig",
 ]
+
+# table prefix name
+DB_PREFIX = "retweeter_"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
