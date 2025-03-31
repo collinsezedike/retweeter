@@ -34,12 +34,15 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "") != False
 
+DB_PREFIX = "retweeter_"
+
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "django_db_prefix",
     "blog.apps.BlogConfig",
     "django.contrib.admin",
     "django.contrib.auth",
